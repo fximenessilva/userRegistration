@@ -106,6 +106,8 @@ export default class UserCrud extends Component {
                 placeholder="Type your email..."
               />
             </div>
+            {this.state.list.map((e) => e.email).includes(this.state.user.email)
+              ? <p id="already-rgtrd">You are already registered</p> : ''}
           </div>
         </div>
         <hr />
