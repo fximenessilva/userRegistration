@@ -8,11 +8,11 @@ export default (props) => (
     <nav className="menu">
       <Link to="/">
         <i className="fa fa-home" />
-        Início
+        Home
       </Link>
       <Link to="/users">
         <i className="fa fa-users" />
-        Usuários
+        Users
       </Link>
     </nav>
   </aside>

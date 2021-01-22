@@ -6,12 +6,12 @@ import Main from '../template/Main';
 export default (props) => (
   <Main
     icon="home"
-    title="Início"
-    subtitle="Segundo Projecto do capítulo de React"
+    title="Home"
+    subtitle="User registration using React"
   >
-    <div className="display-4">Bem Vindo!</div>
+    <div className="display-4">Welcome!</div>
     <hr />
-    <p className="mb-0">Sistema para exemplificar a construção de um cadastro desenvolvido em React</p>
+    <p className="mb-0">Sistem to exemplify the CRUD operations using React</p>
 
   </Main>
 

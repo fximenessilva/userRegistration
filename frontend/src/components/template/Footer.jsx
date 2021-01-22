@@ -5,11 +5,11 @@ import React from 'react';
 export default (props) => (
   <footer className="footer">
     <span>
-      Desenvolvido com
+      Developed with
       {' '}
       <i className="fa fa-heart text-danger" />
       {' '}
-      por
+      by
       {' '}
       <strong>f</strong>
       <span className="text-danger">_</span>

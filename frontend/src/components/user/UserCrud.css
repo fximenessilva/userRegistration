@@ -1,0 +1,11 @@
+.btn-wrapper{
+    display: flex;
+}
+
+.btn-wrapper > .btn{
+    width: 50px;
+}
+
+.btn > .fa{
+    margin-left: 6px;
+}

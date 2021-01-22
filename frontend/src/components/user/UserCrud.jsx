@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-undef */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable react/sort-comp */
 /* eslint-disable react/no-deprecated */
@@ -10,11 +12,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Main from '../template/Main';
+import './UserCrud.css';
+
+import Modal from './Modal';
+import ModalDelete from './ModalDelete';
 
 const headerProps = {
   icon: 'users',
-  title: 'Usuários',
-  subtitle: 'Cadastro de usuários: Incluir, Listar, Alterar e Excluir!',
+  title: 'Users',
+  subtitle: 'User registration: Create, Read, Update and Delete!',
 };
 
 const baseUrl = 'http://localhost:3055/users';
@@ -39,18 +45,22 @@ export default class UserCrud extends Component {
   getUpdatedList(user, add = true) {
     const list = this.state.list.filter((u) => u.id !== user.id);
     if (add) list.unshift(user);
+
     return list;
   }
 
   save() {
     const { user } = this.state;
-    const method = user.id ? 'put' : 'post';
-    const url = user.id ? `${baseUrl}/${user.id}` : baseUrl;
-    axios[method](url, user)
-      .then((resp) => {
-        const list = this.getUpdatedList(resp.data);
-        this.setState({ user: initialState.user, list });
-      });
+    const { email } = user;
+    if (!this.state.list.map((e) => e.email).includes(email)) {
+      const method = user.id ? 'put' : 'post';
+      const url = user.id ? `${baseUrl}/${user.id}` : baseUrl;
+      axios[method](url, user)
+        .then((resp) => {
+          const list = this.getUpdatedList(resp.data);
+          this.setState({ user: initialState.user, list });
+        });
+    }
   }
 
   clear() {
@@ -69,7 +79,7 @@ export default class UserCrud extends Component {
         <div className="row">
           <div className="col-12 col-md-6">
             <div className="form-group">
-              <label htmlFor="name">Nome</label>
+              <label htmlFor="name">Name</label>
               <input
                 type="text"
                 id="name"
@@ -77,14 +87,15 @@ export default class UserCrud extends Component {
                 name="name"
                 value={this.state.user.name}
                 onChange={(e) => this.updateField(e)}
-                placeholder="Digite o nome..."
+                placeholder="Type your name..."
+                required
               />
+
             </div>
           </div>
           <div className="col-12 col-md-6">
             <div className="form-group">
               <label htmlFor="email">E-mail</label>
-
               <input
                 type="text"
                 id="email"
@@ -92,7 +103,7 @@ export default class UserCrud extends Component {
                 name="email"
                 value={this.state.user.email}
                 onChange={(e) => this.updateField(e)}
-                placeholder="Digite o email..."
+                placeholder="Type your email..."
               />
             </div>
           </div>
@@ -103,17 +114,27 @@ export default class UserCrud extends Component {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={(e) => this.save(e)}
+              data-toggle="modal"
+              data-target="#exampleModal"
+              disabled={!this.state.user.name.length || !this.state.user.email.length}
+
             >
-              Salvar
+              Save
             </button>
+            <Modal
+              title="Submit"
+              subtitle="Save changes?"
+              btnTitle="Save changes"
+              onClickAction={(e) => this.save(e)}
+            />
             <button
               type="button"
               className="btn btn-secondary ml-2"
               onClick={(e) => this.clear(e)}
             >
-              Cancelar
+              Cancel
             </button>
+
           </div>
         </div>
       </div>
@@ -137,9 +158,9 @@ export default class UserCrud extends Component {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Nome</th>
+            <th>Name</th>
             <th>Email</th>
-            <th>Ações</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -155,7 +176,7 @@ export default class UserCrud extends Component {
         <td>{user.id}</td>
         <td>{user.name}</td>
         <td>{user.email}</td>
-        <td>
+        <td className="btn-wrapper">
           <button
             type="button"
             className="btn btn-warning"
@@ -166,10 +187,18 @@ export default class UserCrud extends Component {
           <button
             type="button"
             className="btn btn-danger ml-2"
-            onClick={() => this.remove(user)}
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
           >
             <i className="fa fa-trash" />
+
           </button>
+          <ModalDelete
+            title="Delete"
+            subtitle="Delete user?"
+            btnTitle="Delete"
+            onClickAction={() => this.remove(user)}
+          />
         </td>
       </tr>
     ));
