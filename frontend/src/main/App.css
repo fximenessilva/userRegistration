@@ -7,8 +7,8 @@
     --footer-heigth: 40px;
 
     --shadow:
-        0 2px 23px 0 rgba(0, 0, 0, 0.1),
-        0 2px 49px 0 rgba(0, 0, 0, 0.06),       
+        0px 2px 23px 0px rgba(0, 0, 0, 0.1),
+        0px 2px 49px 0px rgba(0, 0, 0, 0.06),       
 }
 
 *{
@@ -20,7 +20,7 @@
     margin: 0px;
     display: grid;
     grid-template-columns: var(--aside-width) 1fr;
-    grid-template-rows: var(--header-heigth) 1fr var(--footer-heigth);
+    grid-template-rows: 120px 1fr var(--footer-heigth);
     grid-template-areas: "logo header" "menu content" "menu footer";
     height: 100vh;
     background-color: #F5F5F5;
