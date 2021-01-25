@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
 /* eslint-disable class-methods-use-this */
@@ -52,14 +53,15 @@ export default class UserCrud extends Component {
   save() {
     const { user } = this.state;
     const { email } = user;
+    const method = user.id ? 'put' : 'post';
+    const url = user.id ? `${baseUrl}/${user.id}` : baseUrl;
+    axios[method](url, user)
+      .then((resp) => {
+        const list = this.getUpdatedList(resp.data);
+        this.setState({ user: initialState.user, list });
+      });
     if (!this.state.list.map((e) => e.email).includes(email)) {
-      const method = user.id ? 'put' : 'post';
-      const url = user.id ? `${baseUrl}/${user.id}` : baseUrl;
-      axios[method](url, user)
-        .then((resp) => {
-          const list = this.getUpdatedList(resp.data);
-          this.setState({ user: initialState.user, list });
-        });
+      return 1;
     }
   }
 
@@ -106,8 +108,8 @@ export default class UserCrud extends Component {
                 placeholder="Type your email..."
               />
             </div>
-            {this.state.list.map((e) => e.email).includes(this.state.user.email)
-              ? <p id="already-rgtrd">You are already registered</p> : ''}
+            {/* {this.state.list.map((e) => e.email).includes(this.state.user.email)
+              ? <p id="already-rgtrd">You are already registered</p> : ''} */}
           </div>
         </div>
         <hr />
